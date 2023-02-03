@@ -1,0 +1,189 @@
+{
+	"camera" : 
+	{
+		"center" : "0.00000 0.00000 -1.00000",
+		"eye" : "0.00000 0.00000 0.00000",
+		"up" : "0.00000 1.00000 0.00000"
+	},
+	"general" : 
+	{
+		"ambientcolor" : "0.30000 0.30000 0.30000",
+		"bloom" : false,
+		"bloomhdrfeather" : 0.1,
+		"bloomhdriterations" : 8,
+		"bloomhdrscatter" : 1.619,
+		"bloomhdrstrength" : 2.0,
+		"bloomhdrthreshold" : 1.0,
+		"bloomstrength" : 2.0,
+		"bloomthreshold" : 0.64999998,
+		"camerafade" : true,
+		"cameraparallax" : true,
+		"cameraparallaxamount" : 0.0099999998,
+		"cameraparallaxdelay" : 0.1,
+		"cameraparallaxmouseinfluence" : 0.5,
+		"camerapreview" : true,
+		"camerashake" : false,
+		"camerashakeamplitude" : 0.5,
+		"camerashakeroughness" : 1.0,
+		"camerashakespeed" : 3.0,
+		"clearcolor" : "0.70000 0.70000 0.70000",
+		"clearenabled" : true,
+		"farz" : 10000.0,
+		"fov" : 50.0,
+		"hdr" : false,
+		"nearz" : 0.0099999998,
+		"orthogonalprojection" : 
+		{
+			"height" : 2881,
+			"width" : 5120
+		},
+		"skylightcolor" : "0.30000 0.30000 0.30000",
+		"zoom" : 1.0
+	},
+	"objects" : 
+	[
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/vhs/effect.json",
+					"id" : 23,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"artifacts" : 0.33000001,
+								"chromatic" : 0.1,
+								"distortionspeed" : 0.17,
+								"distortionstrength" : 0.19,
+								"distortionwidth" : 1.0,
+								"scale" : 0.92000002,
+								"strength" : 1.1
+							},
+							"id" : 24
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 13,
+			"image" : "models/Background.json",
+			"ledsource" : false,
+			"locktransforms" : false,
+			"name" : "Background",
+			"origin" : "2546.15039 1427.86145 0.00000",
+			"parallaxDepth" : "1.78000 1.78000",
+			"perspective" : false,
+			"scale" : "1.38703 1.38703 1.38703",
+			"size" : "3840.00000 2160.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 
+			{
+				"script" : "'use strict';\n\n/**\n * @param {String} text - text to parse\n * @return {Array} - [hours, minutes, seconds] array\n */\nshared.parseTime = (text) =>\n{\n\tlet result = text.match(/^([01]\\d|2[0-3]):([0-5]\\d):([0-5]\\d)$/);\n\tif(result === null) return null;\n\treturn result.slice(1).map(v => Number(v));\n}\n\nshared.getTime = () =>\n{\n\tlet date = new Date();\n\treturn [date.getHours(), date.getMinutes(), date.getSeconds()];\n}\n\n/**\n * @param {Number} h - hours\n * @param {Number} m - minutes\n * @param {Number} s - seconds\n * @return {Number} - time of day in seconds\n */\nshared.timeToSeconds = (h, m, s) => {\n\treturn (h * 60 * 60) + (m * 60) + s;\n}\n\n/**\n * @param {Number} h - hours\n * @param {Number} m - minutes\n * @param {Number} s - seconds\n * @return {Number} - opacity\n */\nshared.calculateOpacity = (h, m, s) =>\n{\n\tconst percent = 1 / 43200;\n\tlet seconds = shared.timeToSeconds(h, m, s);\n\treturn h < 12 ? (percent * seconds) : 2 - (percent * seconds);\n}\n\nshared.updateOpacity = (value) => {\n\t// Custom time\n\tif(engine.userProperties.setcustomtime) {\n\t\tlet time = shared.parseTime(engine.userProperties.customtime);\n\t\tconsole.log(time);\n\t\tif(time === null) return value;\n\t\tlet opacity = shared.calculateOpacity(...time);\n\t\treturn opacity;\n\t}\n\n\t// Freeze time\n\tif(engine.userProperties.freezetime) return value;\n\n\t// Based on time of day\n\treturn shared.calculateOpacity(...shared.getTime());\n}\n\n/**\n * @param {Number} value - for property 'alpha'\n * @return {Number} - update current property value\n */\nexport function update(value) {\n\treturn shared.updateOpacity(value);\n}\n",
+				"value" : 1.0
+			},
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/vhs/effect.json",
+					"id" : 55,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"artifacts" : 0.33000001,
+								"chromatic" : 0.1,
+								"distortionspeed" : 0.17,
+								"distortionstrength" : 0.19,
+								"distortionwidth" : 1,
+								"scale" : 0.92000002,
+								"strength" : 1.1
+							},
+							"id" : 0
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 45,
+			"image" : "models/Background (Day).json",
+			"ledsource" : false,
+			"locktransforms" : false,
+			"name" : "Background (Day)",
+			"origin" : "2546.15039 1427.86145 0.00000",
+			"parallaxDepth" : "1.78000 1.78000",
+			"perspective" : false,
+			"scale" : "1.04020 1.04020 1.03483",
+			"size" : "5120.00000 2881.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 18,
+			"image" : "models/Lara.json",
+			"ledsource" : false,
+			"locktransforms" : false,
+			"name" : "Lara",
+			"origin" : "2560.00000 1440.50000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "5120.00000 2881.00000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 
+			{
+				"script" : "'use strict';\n\n/**\n * @param {Number} value - for property 'alpha'\n * @return {Number} - update current property value\n */\nexport function update(value) {\n\treturn shared.updateOpacity(value);\n}",
+				"value" : 1.0
+			},
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 48,
+			"image" : "models/Lara (Day).json",
+			"ledsource" : false,
+			"locktransforms" : false,
+			"name" : "Lara (Day)",
+			"origin" : "2560.00000 1440.50000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "1.00000 1.00000 1.00000",
+			"size" : "5120.00000 2881.00000",
+			"solid" : true,
+			"visible" : true
+		}
+	],
+	"version" : 1
+}

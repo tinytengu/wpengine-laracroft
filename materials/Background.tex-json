@@ -1,0 +1,10 @@
+{
+	"bleedtransparentcolors" : true,
+	"clampuvs" : true,
+	"cropandresize" : true,
+	"cropresizeheight" : 2160,
+	"cropresizewidth" : 3840,
+	"format" : "rgba8888",
+	"halfmip" : true,
+	"nonpoweroftwo" : true
+}
